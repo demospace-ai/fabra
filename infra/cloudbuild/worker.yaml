@@ -13,9 +13,9 @@ steps:
   args:
   - build
   - '-t'
-  - 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:$SHORT_SHA'
+  - 'us-docker.pkg.dev/fabra-project/fabra-sync/sync:$SHORT_SHA'
   - '-t'
-  - 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest'
+  - 'us-docker.pkg.dev/fabra-project/fabra-sync/sync:latest'
   - '-f'
   - 'backend/sync/Dockerfile'
   - 'backend/'
@@ -23,7 +23,7 @@ steps:
 
 - id: push-sync
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest']
+  args: ['push', 'us-docker.pkg.dev/fabra-project/fabra-sync/sync:latest']
   waitFor: ['build-sync']
 
 - id: deploy-sync
@@ -31,9 +31,9 @@ steps:
   args: 
   - 'run'
   - '--filename=backend/sync/gke-deployment.yaml'
-  - '--image=us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest'
+  - '--image=us-docker.pkg.dev/fabra-project/fabra-sync/sync:latest'
   - '--location=us-west1'
   - '--cluster=fabra-sync-gke-cluster'
   waitFor: ['push-sync']
 
-images: ['us-docker.pkg.dev/fabra-344902/fabra-sync/sync:$SHORT_SHA', 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest']
+images: ['us-docker.pkg.dev/fabra-project/fabra-sync/sync:$SHORT_SHA', 'us-docker.pkg.dev/fabra-project/fabra-sync/sync:latest']

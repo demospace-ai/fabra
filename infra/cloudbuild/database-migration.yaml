@@ -13,16 +13,16 @@ steps:
     args:
       - '-c'
       - |
-        /workspace/migrate -path backend/server/migrations/ -database postgres://db_user:$$DATABASE_PASS@10.111.1.3:5432/fabra-db up && \
+        /workspace/migrate -path backend/server/migrations/ -database postgres://db_user:$$DATABASE_PASS@<REPLACE WITH DB IP>:5432/fabra-db up && \
         echo "MIGRATION COMPLETE"
     secretEnv: ['DATABASE_PASS']
     waitFor: ['install-migrate']
 
 options:
   pool:
-    name: 'projects/fabra-344902/locations/us-west1/workerPools/fabra-pool'
+    name: 'projects/fabra-project/locations/us-west1/workerPools/fabra-pool'
 
 availableSecrets:
   secretManager:
-    - versionName: projects/932264813910/secrets/fabra-db-password/versions/latest
+    - versionName: projects/<REPLACE WITH PROJECT ID>/secrets/fabra-db-password/versions/latest
       env: DATABASE_PASS

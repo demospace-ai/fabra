@@ -6,17 +6,17 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "fabra-344902-tfstate"
+    bucket = "fabra-tfstate"
     prefix = "terraform/state"
   }
 }
 
 provider "google-beta" {
-  project = "fabra-344902"
+  project = "fabra-project"
 }
 
 provider "google" {
-  project = "fabra-344902"
+  project = "fabra-project"
 }
 
 resource "google_container_registry" "registry" {
@@ -146,7 +146,7 @@ resource "google_cloud_run_service" "fabra" {
     spec {
       service_account_name = google_service_account.fabra-backend.email
       containers {
-        image = "gcr.io/fabra-344902/fabra"
+        image = "gcr.io/fabra-project/fabra"
         env {
           name  = "DB_USER"
           value = google_sql_user.db_user.name
@@ -519,8 +519,8 @@ resource "google_kms_key_ring_iam_binding" "data-connection-key-ring-binding" {
   key_ring_id = google_kms_key_ring.data-connection-keyring.id
   role        = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   members = [
-    "serviceAccount:fabra-sync@fabra-344902.iam.gserviceaccount.com",
-    "serviceAccount:fabra-backend@fabra-344902.iam.gserviceaccount.com"
+    "serviceAccount:fabra-sync@fabra-project.iam.gserviceaccount.com",
+    "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
   ]
 }
 
@@ -543,8 +543,8 @@ resource "google_kms_key_ring_iam_binding" "api-key-key-ring-binding" {
   key_ring_id = google_kms_key_ring.api-key-keyring.id
   role        = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   members = [
-    "serviceAccount:fabra-sync@fabra-344902.iam.gserviceaccount.com",
-    "serviceAccount:fabra-backend@fabra-344902.iam.gserviceaccount.com"
+    "serviceAccount:fabra-sync@fabra-project.iam.gserviceaccount.com",
+    "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
   ]
 }
 
@@ -629,7 +629,7 @@ resource "google_service_account_iam_binding" "fabra-worker-gke-binding" {
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    "serviceAccount:fabra-344902.svc.id.goog[default/default]",
+    "serviceAccount:fabra-project.svc.id.goog[default/default]",
   ]
 }
 
@@ -652,8 +652,8 @@ resource "google_kms_key_ring_iam_binding" "webhook-verification-key-ring-bindin
   key_ring_id = google_kms_key_ring.webhook-verification-key-keyring.id
   role        = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   members = [
-    "serviceAccount:fabra-sync@fabra-344902.iam.gserviceaccount.com",
-    "serviceAccount:fabra-backend@fabra-344902.iam.gserviceaccount.com"
+    "serviceAccount:fabra-sync@fabra-project.iam.gserviceaccount.com",
+    "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
   ]
 }
 
@@ -676,8 +676,8 @@ resource "google_kms_key_ring_iam_binding" "end-customer-api-key-ring-binding" {
   key_ring_id = google_kms_key_ring.end-customer-api-key-keyring.id
   role        = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   members = [
-    "serviceAccount:fabra-sync@fabra-344902.iam.gserviceaccount.com",
-    "serviceAccount:fabra-backend@fabra-344902.iam.gserviceaccount.com"
+    "serviceAccount:fabra-sync@fabra-project.iam.gserviceaccount.com",
+    "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
   ]
 }
 
@@ -704,8 +704,8 @@ resource "google_kms_key_ring_iam_binding" "jwt-signing-key-ring-binding" {
   key_ring_id = google_kms_key_ring.jwt-signing-key-keyring.id
   role        = "roles/cloudkms.signerVerifier"
   members = [
-    "serviceAccount:fabra-sync@fabra-344902.iam.gserviceaccount.com",
-    "serviceAccount:fabra-backend@fabra-344902.iam.gserviceaccount.com"
+    "serviceAccount:fabra-sync@fabra-project.iam.gserviceaccount.com",
+    "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
   ]
 }
 
@@ -760,4 +760,43 @@ resource "google_compute_security_policy" "fabra-security-policy" {
   }
 
   timeouts {}
+}
+
+resource "google_artifact_registry_repository" "fabra_server" {
+  location      = "us"
+  repository_id = "fabra-server"
+  description   = "Fabra server image"
+  format        = "DOCKER"
+}
+
+resource "google_project_iam_member" "kms_encrypt_decrypt_role_binding" {
+  project = "fabra-project"
+  for_each = toset([
+    "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+    "roles/secretmanager.secretAccessor",
+    "roles/secretmanager.viewer",
+    "roles/cloudsql.client",
+  ])
+  role   = each.key
+  member = "serviceAccount:fabra-backend@fabra-project.iam.gserviceaccount.com"
+}
+
+resource "google_project_iam_member" "cloud-build-roles" {
+  project  = "fabra-project"
+  for_each = toset([
+    "roles/cloudbuild.workerPoolEditor",
+    "roles/cloudsql.admin",
+    "roles/secretmanager.secretAccessor",
+    "roles/secretmanager.viewer",
+    "roles/cloudkms.admin",
+    "roles/run.admin",
+    "roles/compute.networkAdmin",
+    "roles/container.admin",
+    "roles/storage.admin",
+    "roles/iam.securityAdmin",
+    "roles/vpcaccess.admin",
+    "roles/iam.serviceAccountAdmin"
+  ])
+  role   = each.key
+  member = "serviceAccount:<YOUR PROJECT ID>@cloudbuild.gserviceaccount.com"
 }

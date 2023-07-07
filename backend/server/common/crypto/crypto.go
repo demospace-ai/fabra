@@ -15,10 +15,10 @@ import (
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
-const CONNECTION_KEY = "projects/fabra-344902/locations/global/keyRings/data-connection-keyring/cryptoKeys/data-connection-key"
-const API_KEY_KEY = "projects/fabra-344902/locations/global/keyRings/api-key-keyring/cryptoKeys/api-key-key"
-const WEBHOOK_SIGNING_KEY_KEY = "projects/fabra-344902/locations/global/keyRings/webhook-verification-key-keyring/cryptoKeys/webhook-verification-key-key"
-const END_CUSTOMER_API_KEY_KEY = "projects/fabra-344902/locations/global/keyRings/end-customer-api-key-keyring/cryptoKeys/end-customer-api-key-key"
+const CONNECTION_KEY = "projects/fabra-project/locations/global/keyRings/data-connection-keyring/cryptoKeys/data-connection-key"
+const API_KEY_KEY = "projects/fabra-project/locations/global/keyRings/api-key-keyring/cryptoKeys/api-key-key"
+const WEBHOOK_SIGNING_KEY_KEY = "projects/fabra-project/locations/global/keyRings/webhook-verification-key-keyring/cryptoKeys/webhook-verification-key-key"
+const END_CUSTOMER_API_KEY_KEY = "projects/fabra-project/locations/global/keyRings/end-customer-api-key-keyring/cryptoKeys/end-customer-api-key-key"
 
 type CryptoService interface {
 	DecryptConnectionCredentials(encryptedCredentials string) (*string, error)

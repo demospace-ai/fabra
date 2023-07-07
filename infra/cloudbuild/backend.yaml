@@ -13,9 +13,9 @@ steps:
   args:
   - build
   - '-t'
-  - 'us-docker.pkg.dev/fabra-344902/fabra-server/fabra:$COMMIT_SHA'
+  - 'us-docker.pkg.dev/fabra-project/fabra-server/fabra:$COMMIT_SHA'
   - '-t'
-  - 'us-docker.pkg.dev/fabra-344902/fabra-server/fabra:latest'
+  - 'us-docker.pkg.dev/fabra-project/fabra-server/fabra:latest'
   - '-f'
   - 'backend/server/Dockerfile'
   - 'backend/'
@@ -23,7 +23,7 @@ steps:
 
 - id: push-backend
   name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-docker.pkg.dev/fabra-344902/fabra-server/fabra:latest']
+  args: ['push', 'us-docker.pkg.dev/fabra-project/fabra-server/fabra:latest']
   waitFor: ['build-backend']
 
 - id: deploy-backend
@@ -34,11 +34,11 @@ steps:
   - 'deploy'
   - 'fabra'
   - '--image'
-  - 'us-docker.pkg.dev/fabra-344902/fabra-server/fabra:latest'
+  - 'us-docker.pkg.dev/fabra-project/fabra-server/fabra:latest'
   - '--region'
   - 'us-west1'
   - '--platform'
   - 'managed'
   waitFor: ['push-backend']
 
-images: ['us-docker.pkg.dev/fabra-344902/fabra-server/fabra:$COMMIT_SHA', 'us-docker.pkg.dev/fabra-344902/fabra-server/fabra:latest']
+images: ['us-docker.pkg.dev/fabra-project/fabra-server/fabra:$COMMIT_SHA', 'us-docker.pkg.dev/fabra-project/fabra-server/fabra:latest']

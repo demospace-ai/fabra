@@ -10,7 +10,7 @@ import (
 	"go.fabra.io/server/common/errors"
 )
 
-const JWT_SIGNING_KEY_KEY = "projects/fabra-344902/locations/global/keyRings/jwt-signing-key-keyring/cryptoKeys/jwt-signing-key-key/cryptoKeyVersions/1"
+const JWT_SIGNING_KEY_KEY = "projects/fabra-project/locations/global/keyRings/jwt-signing-key-keyring/cryptoKeys/jwt-signing-key-key/cryptoKeyVersions/1"
 
 // SigningMethodKMS implements the jwt.SiginingMethod interface for Google's Cloud KMS service
 type SigningMethodKMS struct {
