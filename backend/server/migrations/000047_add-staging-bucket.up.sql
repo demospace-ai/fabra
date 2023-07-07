@@ -1,0 +1,1 @@
+ALTER TABLE destinations ADD COLUMN staging_bucket VARCHAR(256);

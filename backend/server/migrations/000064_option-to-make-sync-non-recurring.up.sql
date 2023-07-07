@@ -1,0 +1,10 @@
+ALTER TABLE objects ALTER COLUMN frequency DROP NOT NULL;
+ALTER TABLE objects ALTER COLUMN frequency_units DROP NOT NULL;
+ALTER TABLE objects ADD COLUMN recurring BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE objects ALTER COLUMN recurring DROP DEFAULT;
+ALTER TABLE objects ADD CONSTRAINT check_schedule_config CHECK (NOT recurring OR (recurring AND frequency IS NOT NULL AND frequency_units IS NOT NULL));
+ALTER TABLE syncs ALTER COLUMN frequency DROP NOT NULL;
+ALTER TABLE syncs ALTER COLUMN frequency_units DROP NOT NULL;
+ALTER TABLE syncs ADD COLUMN recurring BOOLEAN NOT NULL DEFAULT TRUE;
+ALTER TABLE syncs ALTER COLUMN recurring DROP DEFAULT;
+ALTER TABLE syncs ADD CONSTRAINT check_schedule_config CHECK (NOT recurring OR (recurring AND frequency IS NOT NULL AND frequency_units IS NOT NULL));

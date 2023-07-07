@@ -1,0 +1,1 @@
+ALTER TABLE field_mappings ADD COLUMN source_field_type VARCHAR(128) NOT NULL DEFAULT 'STRING';

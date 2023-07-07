@@ -1,0 +1,1 @@
+ALTER TABLE objects RENAME COLUMN end_customer_id_field TO end_customer_id_column;

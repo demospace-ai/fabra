@@ -1,0 +1,1 @@
+ALTER TABLE object_fields ADD COLUMN optional BOOLEAN NOT NULL DEFAULT false;

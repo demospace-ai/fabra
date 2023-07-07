@@ -1,0 +1,1 @@
+ALTER TABLE field_mappings DROP COLUMN is_json_field;

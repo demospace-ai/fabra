@@ -1,0 +1,1 @@
+ALTER TABLE connections ADD COLUMN connection_options VARCHAR(512);

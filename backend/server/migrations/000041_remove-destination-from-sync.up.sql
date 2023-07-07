@@ -1,0 +1,1 @@
+ALTER TABLE syncs DROP COLUMN destination_id;

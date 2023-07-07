@@ -1,0 +1,20 @@
+ALTER TABLE objects ALTER COLUMN namespace DROP NOT NULL;
+ALTER TABLE objects ALTER COLUMN table_name DROP NOT NULL;
+ALTER TABLE objects ADD COLUMN target_type VARCHAR(32) NOT NULL DEFAULT 'single_existing';
+ALTER TABLE objects ALTER COLUMN target_type DROP DEFAULT;
+ALTER TABLE objects ADD COLUMN sync_mode VARCHAR(32) NOT NULL DEFAULT 'full_overwrite';
+ALTER TABLE objects ALTER COLUMN sync_mode DROP DEFAULT;
+ALTER TABLE objects ADD COLUMN cursor_field VARCHAR(255);
+ALTER TABLE objects ADD COLUMN primary_key VARCHAR(255);
+ALTER TABLE objects ADD COLUMN frequency integer NOT NULL DEFAULT 1;
+ALTER TABLE objects ALTER COLUMN frequency DROP DEFAULT;
+ALTER TABLE objects ADD COLUMN frequency_units varchar(32) NOT NULL DEFAULT 'days';
+ALTER TABLE objects ALTER COLUMN frequency_units DROP DEFAULT;
+
+ALTER TABLE syncs ALTER COLUMN sync_mode TYPE VARCHAR(32);
+ALTER TABLE syncs ALTER COLUMN frequency_units TYPE varchar(32);
+
+ALTER TABLE api_keys ALTER COLUMN hashed_key DROP DEFAULT;
+ALTER TABLE link_tokens ALTER COLUMN hashed_token DROP DEFAULT;
+ALTER TABLE object_fields ALTER COLUMN omit DROP DEFAULT;
+ALTER TABLE object_fields ALTER COLUMN optional DROP DEFAULT;

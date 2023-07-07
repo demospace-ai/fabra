@@ -1,0 +1,1 @@
+ALTER TABLE field_mappings ADD COLUMN is_json_field BOOLEAN NOT NULL DEFAULT FALSE;

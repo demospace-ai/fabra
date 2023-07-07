@@ -1,0 +1,1 @@
+ALTER TABLE sync_runs ADD COLUMN workflow_id VARCHAR(256) NOT NULL DEFAULT '';

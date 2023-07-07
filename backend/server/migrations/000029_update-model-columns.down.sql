@@ -1,0 +1,3 @@
+ALTER TABLE models ADD COLUMN custom_join TEXT;
+ALTER TABLE models ALTER COLUMN namespace DROP NOT NULL;
+ALTER TABLE models ALTER COLUMN table_name DROP NOT NULL;

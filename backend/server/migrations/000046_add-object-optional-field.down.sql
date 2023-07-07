@@ -1,0 +1,1 @@
+ALTER TABLE object_fields DROP COLUMN optional;

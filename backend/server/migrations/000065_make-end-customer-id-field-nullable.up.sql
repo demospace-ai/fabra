@@ -1,0 +1,1 @@
+ALTER TABLE objects ALTER COLUMN end_customer_id_field DROP NOT NULL;

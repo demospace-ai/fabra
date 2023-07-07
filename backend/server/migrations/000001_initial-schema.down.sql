@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS sessions;
+DROP TABLE IF EXISTS external_profiles;
+DROP TABLE IF EXISTS user_identities;
+DROP TABLE IF EXISTS emails;

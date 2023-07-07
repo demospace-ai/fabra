@@ -1,0 +1,1 @@
+ ALTER TABLE field_mappings ALTER COLUMN source_field_type DROP NOT NULL;

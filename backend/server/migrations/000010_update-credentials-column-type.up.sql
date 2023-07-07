@@ -1,0 +1,1 @@
+ALTER TABLE data_connections ALTER COLUMN credentials TYPE TEXT;

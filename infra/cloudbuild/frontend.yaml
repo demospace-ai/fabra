@@ -1,0 +1,18 @@
+steps:
+  - id: install-frontend
+    name: node
+    entrypoint: npm
+    args: ['--prefix', 'frontend/', 'install']
+    waitFor: ['-']
+
+  - id: build-frontend
+    name: node
+    entrypoint: npm
+    args: ['--prefix', 'frontend/', 'run', 'build']
+    waitFor: ['install-frontend']
+
+  - id: deploy-frontend
+    name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: gsutil
+    args: ['cp', '-r', 'frontend/build/*', 'gs://fabra-frontend-bucket']
+    waitFor: ['build-frontend']

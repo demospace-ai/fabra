@@ -1,0 +1,1 @@
+ALTER TABLE field_mappings RENAME TO sync_field_mappings;

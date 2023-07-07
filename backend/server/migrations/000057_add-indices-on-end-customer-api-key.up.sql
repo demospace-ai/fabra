@@ -1,0 +1,1 @@
+CREATE INDEX end_customer_api_keys_organization_id_and_end_customer_id_idx ON end_customer_api_keys(organization_id, end_customer_id);

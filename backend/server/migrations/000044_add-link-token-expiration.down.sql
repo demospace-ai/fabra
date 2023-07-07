@@ -1,0 +1,1 @@
+ALTER TABLE link_tokens DROP COLUMN expiration;

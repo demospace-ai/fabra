@@ -1,0 +1,1 @@
+ALTER TABLE syncs ADD COLUMN workflow_id VARCHAR(256);

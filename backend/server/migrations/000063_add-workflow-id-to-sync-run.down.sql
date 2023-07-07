@@ -1,0 +1,1 @@
+ALTER TABLE sync_runs DROP COLUMN workflow_id;

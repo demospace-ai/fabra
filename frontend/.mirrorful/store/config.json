@@ -1,0 +1,38 @@
+{
+  "tokens": {
+    "colorData": [
+      {
+        "name": "Fabra Primary",
+        "baseColor": "#475569",
+        "variants": {
+          "Hover": "#1e293b",
+          "Default": "#475569"
+        }
+      }
+    ],
+    "typography": {
+      "fontSizes": [
+        {
+          "value": 1,
+          "unit": "rem",
+          "name": "sm"
+        },
+        {
+          "value": 1.2,
+          "unit": "rem",
+          "name": "md"
+        },
+        {
+          "value": 1.4,
+          "unit": "rem",
+          "name": "lg"
+        }
+      ]
+    }
+  },
+  "__internal__": {
+    "migrations": {
+      "version": "0.0.3"
+    }
+  }
+}

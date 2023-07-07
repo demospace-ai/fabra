@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS end_customer_api_keys;

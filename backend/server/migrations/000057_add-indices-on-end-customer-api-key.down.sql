@@ -1,0 +1,1 @@
+DROP INDEX end_customer_api_keys_organization_id_and_end_customer_id_idx;

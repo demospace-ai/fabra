@@ -1,0 +1,1 @@
+ALTER TABLE syncs ADD COLUMN destination_id BIGINT REFERENCES destinations(id);

@@ -1,0 +1,1 @@
+ALTER TABLE event_sets DROP COLUMN custom_join;

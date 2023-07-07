@@ -1,0 +1,1 @@
+ALTER TABLE organizations DROP COLUMN free_trial_end;

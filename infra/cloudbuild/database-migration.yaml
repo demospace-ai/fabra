@@ -1,0 +1,28 @@
+steps:
+  - id: install-migrate
+    name: gcr.io/cloud-builders/curl
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz && mv migrate.linux-amd64 /workspace/migrate && chmod +x /workspace/migrate'
+    waitFor: ['-']
+
+  - id: migrate
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        /workspace/migrate -path backend/server/migrations/ -database postgres://db_user:$$DATABASE_PASS@10.111.1.3:5432/fabra-db up && \
+        echo "MIGRATION COMPLETE"
+    secretEnv: ['DATABASE_PASS']
+    waitFor: ['install-migrate']
+
+options:
+  pool:
+    name: 'projects/fabra-344902/locations/us-west1/workerPools/fabra-pool'
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/932264813910/secrets/fabra-db-password/versions/latest
+      env: DATABASE_PASS

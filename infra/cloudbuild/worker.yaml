@@ -1,0 +1,39 @@
+steps:
+- id: test-sync
+  name: 'golang:1.20'
+  script: |
+    cd backend/sync;
+    go test -v ./...;
+  env:
+    - 'IS_CLOUD_BUILD=true'
+  waitFor: ['-']
+
+- id: build-sync
+  name: 'gcr.io/cloud-builders/docker'
+  args:
+  - build
+  - '-t'
+  - 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:$SHORT_SHA'
+  - '-t'
+  - 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest'
+  - '-f'
+  - 'backend/sync/Dockerfile'
+  - 'backend/'
+  waitFor: ['test-sync']
+
+- id: push-sync
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest']
+  waitFor: ['build-sync']
+
+- id: deploy-sync
+  name: "gcr.io/cloud-builders/gke-deploy"
+  args: 
+  - 'run'
+  - '--filename=backend/sync/gke-deployment.yaml'
+  - '--image=us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest'
+  - '--location=us-west1'
+  - '--cluster=fabra-sync-gke-cluster'
+  waitFor: ['push-sync']
+
+images: ['us-docker.pkg.dev/fabra-344902/fabra-sync/sync:$SHORT_SHA', 'us-docker.pkg.dev/fabra-344902/fabra-sync/sync:latest']

@@ -1,0 +1,1 @@
+ALTER TABLE funnel_steps DROP COLUMN step_order;

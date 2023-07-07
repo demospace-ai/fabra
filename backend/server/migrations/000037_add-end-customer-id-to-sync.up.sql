@@ -1,0 +1,1 @@
+ALTER TABLE syncs ADD COLUMN end_customer_id BIGINT NOT NULL;

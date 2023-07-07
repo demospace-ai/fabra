@@ -1,0 +1,1 @@
+ALTER TABLE organizations ADD COLUMN free_trial_end TIMESTAMP WITH TIME ZONE;

@@ -1,0 +1,3 @@
+ALTER TABLE sync_field_mappings DROP CONSTRAINT fkey_destination_field_id_object_fields_id;
+ALTER TABLE sync_field_mappings RENAME COLUMN destination_field_id TO destination_field_name;
+ALTER TABLE sync_field_mappings ALTER COLUMN destination_field_name TYPE VARCHAR(255);

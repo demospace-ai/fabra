@@ -1,0 +1,17 @@
+ALTER TABLE users DROP COLUMN organization_id;
+ALTER TABLE users DROP COLUMN email;
+ALTER TABLE users ALTER COLUMN first_name DROP NOT NULL;
+ALTER TABLE users ALTER COLUMN last_name DROP NOT NULL;
+ALTER TABLE posts DROP COLUMN organization_id;
+
+DROP TABLE organizations;
+
+CREATE TABLE IF NOT EXISTS emails(
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(255),
+    user_id BIGINT NOT NULL REFERENCES users(id),
+
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    deactivated_at TIMESTAMP WITH TIME ZONE
+);

@@ -1,0 +1,3 @@
+ALTER TABLE models DROP COLUMN custom_join;
+ALTER TABLE models ALTER COLUMN namespace SET NOT NULL;
+ALTER TABLE models ALTER COLUMN table_name SET NOT NULL;

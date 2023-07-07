@@ -1,0 +1,1 @@
+ALTER TABLE event_sets ADD custom_join TEXT;
