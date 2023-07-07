@@ -10,11 +10,11 @@ To deploy this system in production, there are only a few manual steps:
 ### 1. Setup GCP Project
 Create a new GCP project and take note of the name and project ID.
 
-### 1. Create Terraform GCP Cloud Storage bucket
+### 2. Create Terraform GCP Cloud Storage bucket
 This Google Cloud Bucket is used as a backing store for Terraform, so must be manually setup. Note the name you use
 as you'll need to edit `infra/terraform/main.tf` to point to it.
 
-### 1. Initial Terraform run
+### 3. Initial Terraform run
 Once those two things are setup, everything else can be configured with Infrastructure-as-code in Terraform. However,
 you must run `terraform apply` once manually to setup the correct permissions for the Cloud Build service account to
 run Terraform automatically in the future.
