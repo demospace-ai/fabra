@@ -2,27 +2,22 @@
 
 ## Introduction
 
-To deploy this system, you only need to manually setup a few things:
-- GCP Project
-- Google Cloud Bucket
-- Google Cloud Build
-    - Special service account with access to create/modify/delete GCP resources
+To deploy this system in production, there are only a few manual steps:
+- Setup a GCP Project
+- Create Terraform Google Cloud Storage bucket
+- Perform initial Terraform run
 
-The Google Cloud Bucket is used as a backing store for Terraform, so must be manually setup.
+### Setup GCP Project
+Create a new GCP project and take note of the name and project ID.
 
-Google Cloud Build is used for a various automatic actions triggered by pushes to the main Github branch:
-- Run Terraform to build any new infrastructure
-- Build Docker image for the Go code and deploy it to GCR
-- Run database migrations
+### Create Terraform GCP Cloud Storage bucket
+This Google Cloud Bucket is used as a backing store for Terraform, so must be manually setup. Note the name you use
+as you'll need to edit `infra/terraform/main.tf` to point to it.
 
-Once those two things are setup, everything else can be configured with Infrastructure-as-code in Terraform,
-including:
-- Google Cloud Repository bucket
-- Cloud Run services
-    - Includes setting any environment variables and Cloud SQL connections
-- Cloud SQL instances
-- Kuberenetes Cluster
-
+### Initial Terraform run
+Once those two things are setup, everything else can be configured with Infrastructure-as-code in Terraform. However,
+you must run `terraform apply` once manually to setup the correct permissions for the Cloud Build service account to
+run Terraform automatically in the future.
 
 ## Deploy to new region
 
@@ -55,3 +50,9 @@ including:
           --member="serviceAccount:fabra-prod@cloudbuild.gserviceaccount.com" \
           --role="roles/iam.serviceAccountUser"
 1. Run `terraform apply`
+
+### Other Notes
+Google Cloud Build is used for a various automatic actions triggered by pushes to the main Github branch:
+- Run Terraform to build any new infrastructure
+- Build Docker image for the Go code and deploy it to GCR
+- Run database migrations
