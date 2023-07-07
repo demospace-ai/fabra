@@ -2,9 +2,7 @@
 
 ## Introduction
 
-This super basic setup should work for any Go project.
-
-You only need to manually setup a few things:
+To deploy this system, you only need to manually setup a few things:
 - GCP Project
 - Google Cloud Bucket
 - Google Cloud Build
